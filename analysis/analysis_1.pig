@@ -1,5 +1,5 @@
 /*======================================================================
- * Script is aimed at optimizing ads to attract more customers
+ * Script is aimed at optimizing cost of campaign ads to attract more customers
  * and reduce ad cost by:
  *          a. Determine lowest cost display site
  *          b. Display highest cost keywords
@@ -112,7 +112,7 @@ by_site = FOREACH grouped {
    */
   GENERATE group, (double) clickcount/total as ctr;
 }
-/* sort the records in ascending order of clickthrough rate */
+/* sort the records in ascending order of click through rate (CTR)*/
 sorted = ORDER by_site BY ctr;
 
 /* show just the first three */
