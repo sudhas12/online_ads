@@ -1,0 +1,91 @@
+Regular Expression pattern:
+*
+*   ^       = beginning of string
+*   2013    = literal value '2013'
+*   0[2345] = 0 followed by 2, 3, 4, or 5
+*   -       = a literal character '-'
+*   \\d{2}  = exactly two digits
+*   \\s     = a single whitespace character
+*   .*      = any number of any characters
+*   $       = end of string
+=============================================================================
+Introduction to Regular Expressions
+=============================================================================
+Regular expressions are used for pattern matching. There are two kinds of patterns in
+regular expressions: literals and metacharacters. Literal values are used to match precise
+patterns while metacharacters have special meaning; for example, a dot will match any
+single character. Here’s the complete list of metacharacters, followed by explanations of
+those that are commonly used:
+< ( [ { \ ^ - = $ ! | ] } ) ? * + . >
+
+Literal characters are any characters not listed as a metacharacter. They’re matched exactly,
+but if you want to match a metacharacter, you must escape it with a backslash. Since a
+backslash is itself a metacharacter, it must also be escaped with a backslash. For example,
+you would use the pattern \\. to match a literal dot.
+
+Regular expressions support patterns much more flexible than simply using a dot to match
+any character. The following explains how to use character classes to restrict which
+characters are matched.
+
+Character Classes
+-----------------
+[057] Matches any single digit that is either 0, 5, or 7
+[0-9] Matches any single digit between 0 and 9
+[3-6] Matches any single digit between 3 and 6
+[a-z] Matches any single lowercase letter
+[C-F] Matches any single uppercase letter between C and F
+
+For example, the pattern [C-F][3-6] would match the string D3 or F5 but would fail to
+match G3 or C7.
+
+There are also some built-in character classes that are shortcuts for common sets of
+characters.
+
+Predefined Character Classes
+----------------------------
+\\d Matches any single digit
+\\w Matches any word character (letters of any case, plus digits or underscore)
+\\s Matches any whitespace character (space, tab, newline, etc.)
+
+For example, the pattern \\d\\d\\d\\w would match the string 314d or 934X but would
+fail to match 93X or Z871.
+
+Sometimes it’s easier to choose what you don’t want to match instead of what you do want
+to match. These three can be negated by using an uppercase letter instead.
+
+Negated Predefined Character Classes
+------------------------------------
+\\D Matches any single non-digit character
+\\W Matches any non-word character
+\\S Matches any non-whitespace character
+For example, the pattern \\D\\D\\W would match the string ZX# or @ P but would fail to
+match 93X or 36_.
+
+The metacharacters shown above match each exactly one character. You can specify them
+multiple times to match more than one character, but regular expressions support the use of
+quantifiers to eliminate this repetition.
+
+Matching Quantifiers
+--------------------
+{5} Preceding character may occur exactly five times
+{0,6} Preceding character may occur between zero and six times
+? Preceding character is optional (may occur zero or one times)
++ Preceding character may occur one or more times
+* Preceding character may occur zero or more times
+By default, quantifiers try to match as many characters as possible. If you used the pattern
+ore.+a on the string Dualcore has a store in Florida, you might be surprised
+to learn that it matches ore has a store in Florida rather than ore ha or ore
+in Florida as you might have expected. This is because matches are “greedy” by default.
+Adding a question mark makes the quantifier match as few characters as possible instead, so
+the pattern ore.+?a on this string would match ore ha.
+
+Finally, there are two special metacharacters that match zero characters. They are used to
+ensure that a string matches a pattern only when it occurs at the beginning or end of a string.
+
+Boundary Matching Metacharacters
+--------------------------------
+^ Matches only at the beginning of a string
+$ Matches only at the ending of a string
+Note: When used inside square brackets (which denote a character class), the ^ character is
+interpreted differently. In that context, it negates the match. Therefore, specifying the
+pattern [^0-9] is equivalent to using the predefined character class \\D described earlier.
